@@ -3,8 +3,11 @@ name: Build and Publish Docker image
 on:
   push:
     branches:
-      - main   # Or whichever branch you want
-  workflow_dispatch: # Allow manual trigger
+      - '*'          # all branches
+      - '!dependabot/**'  # optional: ignore dependabot
+    tags:
+      - 'v*'         # version tags like v1.0.0
+  workflow_dispatch:
 
 jobs:
   build-and-push:
@@ -12,7 +15,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # Needed to push to GHCR
+      packages: write
 
     steps:
       - name: Checkout code
@@ -25,11 +28,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels)
+      - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
