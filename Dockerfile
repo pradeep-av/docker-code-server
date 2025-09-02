@@ -1,9 +1,6 @@
 # Start from linuxserver/code-server base image
 FROM lscr.io/linuxserver/code-server:latest
 
-# Install prerequisites and tools
-USER root
-
 # Install curl, wget, tar, and other necessary tools
 RUN apt-get update && apt-get install -y lsb-release curl wget tar gnupg2 apt-transport-https ca-certificates build-essential jq
 
@@ -23,8 +20,5 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - \
 
 # Clean up apt cache to reduce image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Switch back to non-root user as per linuxserver image default
-USER abc
 
 # Default command and entrypoint remain unchanged (inherited)
