@@ -5,7 +5,7 @@ FROM lscr.io/linuxserver/code-server:latest
 USER root
 
 # Install curl, wget, tar, and other necessary tools
-RUN apt-get update && apt-get install -y curl wget tar gnupg2 apt-transport-https ca-certificates
+RUN apt-get update && apt-get install -y lsb-release curl wget tar gnupg2 apt-transport-https ca-certificates
 
 # Install Golang (example version 1.21.0)
 RUN wget https://go.dev/dl/go1.21.0.linux-amd64.tar.gz \
