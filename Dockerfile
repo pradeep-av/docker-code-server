@@ -2,7 +2,19 @@
 FROM lscr.io/linuxserver/code-server:latest
 
 # Install curl, wget, tar, and other necessary tools
-RUN apt-get update && apt-get install -y lsb-release curl wget tar gnupg2 apt-transport-https ca-certificates build-essential jq
+RUN apt-get update && apt-get install -y \
+    lsb-release \
+    curl \
+    wget \
+    tar \
+    gnupg2 \
+    apt-transport-https \
+    ca-certificates \
+    build-essential \
+    jq \
+    python3 \
+    python3-pip \
+    python3-venv
 
 # Install Golang (example version 1.24.6)
 RUN wget https://go.dev/dl/go1.24.6.linux-amd64.tar.gz \
